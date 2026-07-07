@@ -1,10 +1,6 @@
 # Bibliography Guide
 
-This project uses Zotero with Better BibTeX to maintain an auto-updating bibliography file that Quarto can cite from. The current bibliography export is:
-
-```text
-data/biblio/IBD Anal Cancer.bib
-```
+Positron can use Zotero, and installing Better BibTeX allows you to maintain an auto-updating bibliography file that Quarto can cite from. You specify a specific bibliography export from Zotero (see Zotero setup) and then it auto-maintains the references in your zotero folder, with file address referenes, so that it can pull PDFs of the documents when you do a render:
 
 ## Goal
 
@@ -24,10 +20,10 @@ This gives us:
 4. Add manuscript references to that collection.
 5. Right-click the Zotero collection and choose `Export Collection...`.
 6. Choose the `Better BibTeX` export format.
-7. Save the export to:
+7. Save the export to (can be anywhere but example):
 
 ```text
-data/biblio/IBD Anal Cancer.bib
+data/biblio/(folder name).bib
 ```
 
 8. Enable `Keep updated` during export.
@@ -59,7 +55,7 @@ QMD files in this project live in `qmd/`, so the bibliography path is relative t
 Use this in each QMD:
 
 ```yaml
-bibliography: "../data/biblio/IBD Anal Cancer.bib"
+bibliography: "../data/biblio/(folder name).bib"
 ```
 
 The quotes matter. Without quotes, Positron's visual citation picker may not recognize the file path correctly because the filename contains spaces.
