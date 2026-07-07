@@ -9,4 +9,6 @@ format:
     css: styles/tables.css
     embed-resources: true
     self-contained-math: true
+execute:
+    echo: false
 ---
