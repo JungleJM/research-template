@@ -227,22 +227,3 @@ Project recommendation:
 
 Worth testing if you want a focused source-mode picker with good author/search behavior. Treat it as optional convenience tooling, not the source of truth. Zotero + Better BibTeX auto-export should remain the source of truth.
 
-## Recommended Current Workflow
-
-1. Add papers to Zotero.
-2. Add them to the `IBD Anal Cancer` Zotero collection.
-3. Let Better BibTeX auto-update:
-
-```text
-data/biblio/IBD Anal Cancer.bib
-```
-
-4. In QMD files, use:
-
-```yaml
-bibliography: "../data/biblio/IBD Anal Cancer.bib"
-```
-
-5. Insert citations in Visual mode, preferring entries that come from the `.bib` file.
-6. Use Better BibTeX citation keys consistently.
-7. Consider `jinvim.vscode-zotero` or `mvuorre/zotero-citation-picker` only if source-mode citation insertion becomes important.
