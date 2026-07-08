@@ -22,4 +22,8 @@ if [[ -f "$target/.research-template/install-research-stack.sh" ]]; then
   chmod +x "$target/.research-template/install-research-stack.sh"
 fi
 
+if [[ -f "$target/.research-template/scripts/publish_qmd.R" ]]; then
+  chmod +x "$target/.research-template/scripts/publish_qmd.R"
+fi
+
 echo "Installed research template files into $target/.research-template"

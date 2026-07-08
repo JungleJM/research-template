@@ -36,6 +36,40 @@ file = {/Users/jmath/Zotero/storage/.../Paper title.pdf}
 
 Those paths are enough for a future publish script to copy only cited PDFs into a publish folder.
 
+## Publishing Outputs and Cited Files
+
+When a draft is ready, run this from the repo root:
+
+```sh
+Rscript .research-template/scripts/publish_qmd.R "qmd/your-draft.qmd"
+```
+
+The publish script reads the QMD YAML `format:` block and renders whichever of
+`html`, `pdf`, and `docx` are declared there. It writes those files to:
+
+```text
+publish/html/
+publish/pdf/
+publish/docx/
+```
+
+It also reads the QMD YAML `bibliography:` path, copies that `.bib` file to:
+
+```text
+publish/files/
+```
+
+Then it scans the QMD for cited keys and copies only the cited Better BibTeX
+`file = {...}` attachments into `publish/files/`. A manifest is written to:
+
+```text
+publish/files/files-manifest.csv
+```
+
+The script requires R and Quarto. It has no extra R package dependencies. PDF
+rendering requires the same PDF engine that Quarto normally uses on your
+machine.
+
 ## Better BibTeX Export Settings
 
 In Zotero:
@@ -226,4 +260,3 @@ Risks:
 Project recommendation:
 
 Worth testing if you want a focused source-mode picker with good author/search behavior. Treat it as optional convenience tooling, not the source of truth. Zotero + Better BibTeX auto-export should remain the source of truth.
-
