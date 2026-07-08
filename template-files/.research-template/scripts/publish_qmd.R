@@ -13,12 +13,12 @@ usage <- function() {
       "  publish/html/",
       "  publish/pdf/",
       "  publish/docx/",
-      "  publish/files/",
+      "  publish/references/",
       "",
       "The script reads the QMD YAML to determine which of html, pdf, and docx",
       "formats to render. It also reads the YAML bibliography field, copies the",
-      "bibliography file into publish/files, and copies cited attachment files",
-      "from Better BibTeX file fields into publish/files.",
+      "bibliography file into publish/references, and copies cited attachment files",
+      "from Better BibTeX file fields into publish/references.",
       sep = "\n"
     )
   )
@@ -92,8 +92,9 @@ qmd_rel <- sub(
 )
 
 publish_dir <- file.path(repo_root, "publish")
-files_dir <- file.path(publish_dir, "files")
-dir.create(files_dir, recursive = TRUE, showWarnings = FALSE)
+references_dir <- file.path(publish_dir, "references")
+dir.create(references_dir, recursive = TRUE, showWarnings = FALSE)
+unlink(file.path(references_dir, "files-manifest.csv"), force = TRUE)
 
 read_front_matter <- function(path) {
   lines <- readLines(path, warn = FALSE)
@@ -245,7 +246,7 @@ file_field_paths <- function(entry_block) {
   paths[nzchar(paths)]
 }
 
-copy_reference_files <- function(qmd_file, bib_files, files_dir) {
+copy_reference_files <- function(qmd_file, bib_files, references_dir) {
   cited_keys <- extract_cited_keys(qmd_file)
   manifest <- data.frame(
     citation_key = character(),
@@ -256,14 +257,14 @@ copy_reference_files <- function(qmd_file, bib_files, files_dir) {
   )
 
   if (length(bib_files) == 0) {
-    write.csv(manifest, file.path(files_dir, "files-manifest.csv"), row.names = FALSE)
+    write.csv(manifest, file.path(references_dir, "references-manifest.csv"), row.names = FALSE)
     return(invisible(manifest))
   }
 
   for (bib_file in bib_files) {
     invisible(file.copy(
       bib_file,
-      file.path(files_dir, basename(bib_file)),
+      file.path(references_dir, basename(bib_file)),
       overwrite = TRUE
     ))
   }
@@ -319,7 +320,7 @@ copy_reference_files <- function(qmd_file, bib_files, files_dir) {
     }
 
     for (source in existing_sources) {
-      destination <- file.path(files_dir, paste0(key, " - ", safe_name(source)))
+      destination <- file.path(references_dir, paste0(key, " - ", safe_name(source)))
       copied <- file.copy(source, destination, overwrite = TRUE)
       manifest <- rbind(manifest, data.frame(
         citation_key = key,
@@ -331,7 +332,7 @@ copy_reference_files <- function(qmd_file, bib_files, files_dir) {
     }
   }
 
-  write.csv(manifest, file.path(files_dir, "files-manifest.csv"), row.names = FALSE)
+  write.csv(manifest, file.path(references_dir, "references-manifest.csv"), row.names = FALSE)
   invisible(manifest)
 }
 
@@ -368,9 +369,9 @@ for (format in formats) {
   copy_rendered_files(render_dir, target_dir, format)
 }
 
-copy_reference_files(qmd_file, bib_files, files_dir)
+copy_reference_files(qmd_file, bib_files, references_dir)
 unlink(render_root, recursive = TRUE, force = TRUE)
 
 message("Rendered formats: ", paste(formats, collapse = ", "))
 message("Published outputs to: ", publish_dir)
-message("Copied bibliography and cited files to: ", files_dir)
+message("Copied bibliography and cited references to: ", references_dir)

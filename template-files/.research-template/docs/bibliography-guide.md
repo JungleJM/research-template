@@ -56,14 +56,14 @@ publish/docx/
 It also reads the QMD YAML `bibliography:` path, copies that `.bib` file to:
 
 ```text
-publish/files/
+publish/references/
 ```
 
 Then it scans the QMD for cited keys and copies only the cited Better BibTeX
-`file = {...}` attachments into `publish/files/`. A manifest is written to:
+`file = {...}` attachments into `publish/references/`. A manifest is written to:
 
 ```text
-publish/files/files-manifest.csv
+publish/references/references-manifest.csv
 ```
 
 The script requires R and Quarto. It has no extra R package dependencies. PDF

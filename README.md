@@ -48,8 +48,8 @@ publish/docx/
 ```
 
 It also reads the QMD YAML `bibliography:` field, copies the `.bib` file into
-`publish/files/`, and copies cited Better BibTeX `file = {...}` attachments
-into `publish/files/`.
+`publish/references/`, and copies cited Better BibTeX `file = {...}` attachments
+into `publish/references/`.
 
 Requirements: R, Quarto, and a working Quarto PDF engine if the QMD declares
 `pdf` output. The publish script does not require extra R packages.
